@@ -16,6 +16,12 @@ class GameScene: SKScene {
     physicsWorld.gravity = CGVector(dx: 0, dy: 0)
     createPath()
     redrawPath()
+      
+    let buttonEraser = SKShapeNode(circleOfRadius: 100)
+    buttonEraser.name = "buttonEraser"
+    buttonEraser.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+    buttonEraser.zPosition = 6
+    addChild(buttonEraser)
   }
 
   override func update(_ currentTime: TimeInterval) {
@@ -27,10 +33,14 @@ class GameScene: SKScene {
     }
     //pathPoints.removeAll(keepingCapacity: true)
     let location = touch.location(in: self)
+    let node = self.atPoint(location)
+      if node.name == "buttonEraser"{
+            if wayPoints.count == 0 { return }
+            wayPoints.removeAll(keepingCapacity: true)
+        }
+      
       pathPoints.append(location)
       redrawPath()
-
-      shape.removeAllActions()
       shape.alpha = 1
   }
 
